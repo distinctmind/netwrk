@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FlatList, Pressable, SafeAreaView, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import EditScreenInfo from "../components/EditScreenInfo";
@@ -6,17 +7,30 @@ import { Text, View } from "../components/Themed";
 
 import { RootTabScreenProps } from "../types";
 
-const people: string[] = ["jay"];
+// const people: string[] = ["jay"];
+const initialList: string[] = [];
 
 export default function PeopleScreen({
   navigation,
 }: RootTabScreenProps<"PeopleTab">) {
+  const [people, setPeople] = useState(initialList);
+
+  const addPerson = (person: string) => {
+    const updatedPeople: string[] = [...people, person];
+    setPeople(updatedPeople);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>People</Text>
         <Pressable
-          onPress={() => navigation.navigate("AddPerson")}
+          onPress={() =>
+            navigation.navigate("AddPerson", {
+              people,
+              addPerson,
+            })
+          }
           style={[
             styles.addButton,
             // ({ pressed }) => ({

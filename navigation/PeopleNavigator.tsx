@@ -1,8 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AddPerson from "../screens/AddPerson";
 import PeopleScreen from "../screens/PeopleScreen";
+import { RootStackParamList } from "../types";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const PeopleNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>

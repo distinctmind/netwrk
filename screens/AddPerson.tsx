@@ -1,14 +1,26 @@
-import React from "react";
+import { useState } from "react";
 import { TextInput, StyleSheet, View, Button } from "react-native";
+import { RootStackScreenProps } from "../types";
 
-function AddPerson() {
+function AddPerson({ navigation, route }: RootStackScreenProps<"AddPerson">) {
+  const [name, setName] = useState("");
+
+  const onPress = () => {
+    route.params.addPerson(name);
+    navigation.pop();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.name}>
-        <TextInput style={styles.textInput} placeholder="Name" />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Name"
+          onChangeText={(text) => setName(text)}
+        />
         <View style={styles.separator} />
       </View>
-      <Button title="Add Person" />
+      <Button title="Add Person" onPress={onPress} />
     </View>
   );
 }
