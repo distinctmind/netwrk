@@ -26,6 +26,8 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import AddPerson from "../screens/AddPerson";
+import PeopleNavigator from "./PeopleNavigator";
 
 export default function Navigation({
   colorScheme,
@@ -108,12 +110,28 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="People"
-        component={PeopleScreen}
-        options={{
+        name="PeopleTab"
+        component={PeopleNavigator}
+        options={({ navigation }: RootTabScreenProps<"PeopleTab">) => ({
           title: "People",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
+          // headerRight: () => (
+          //   <Pressable
+          //     onPress={() => navigation.navigate("AddPerson")}
+          //     style={({ pressed }) => ({
+          //       opacity: pressed ? 0.5 : 1,
+          //     })}
+          //   >
+          //     <FontAwesome
+          //       name="plus"
+          //       size={25}
+          //       color={Colors[colorScheme].text}
+          //       style={{ marginRight: 15 }}
+          //     />
+          //   </Pressable>
+          // ),
+        })}
       />
     </BottomTab.Navigator>
   );
