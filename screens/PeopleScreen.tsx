@@ -25,12 +25,7 @@ export default function PeopleScreen({
       <View style={styles.header}>
         <Text style={styles.headerText}>People</Text>
         <Pressable
-          onPress={() =>
-            navigation.navigate("AddPerson", {
-              people,
-              addPerson,
-            })
-          }
+          onPress={() => navigation.navigate("AddPerson", { addPerson })}
           style={[
             styles.addButton,
             // ({ pressed }) => ({

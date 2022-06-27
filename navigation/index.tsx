@@ -81,12 +81,12 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Upcoming"
+      initialRouteName="PeopleTab"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Upcoming"
         component={UpcomingScreen}
         options={({ navigation }: RootTabScreenProps<"Upcoming">) => ({
@@ -108,7 +108,7 @@ function BottomTabNavigator() {
             </Pressable>
           ),
         })}
-      />
+      /> */}
       <BottomTab.Screen
         name="PeopleTab"
         component={PeopleNavigator}
@@ -116,21 +116,6 @@ function BottomTabNavigator() {
           title: "People",
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          // headerRight: () => (
-          //   <Pressable
-          //     onPress={() => navigation.navigate("AddPerson")}
-          //     style={({ pressed }) => ({
-          //       opacity: pressed ? 0.5 : 1,
-          //     })}
-          //   >
-          //     <FontAwesome
-          //       name="plus"
-          //       size={25}
-          //       color={Colors[colorScheme].text}
-          //       style={{ marginRight: 15 }}
-          //     />
-          //   </Pressable>
-          // ),
         })}
       />
     </BottomTab.Navigator>
