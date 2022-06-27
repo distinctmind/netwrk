@@ -8,11 +8,7 @@ function AppTextInput({
   return (
     <View style={styles.view}>
       <Text style={styles.label}>Name</Text>
-      <TextInput
-        style={styles.input}
-        // placeholder="Name"
-        onChangeText={onChangeText}
-      />
+      <TextInput style={styles.input} onChangeText={onChangeText} />
     </View>
   );
 }
@@ -38,7 +34,6 @@ const styles = StyleSheet.create({
   view: {
     padding: 20,
     marginVertical: 15,
-    // alignContent: "center",
   },
 });
 
