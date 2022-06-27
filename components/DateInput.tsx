@@ -23,11 +23,10 @@ function DateInput() {
 const styles = StyleSheet.create({
   view: {
     padding: 20,
-    // marginVertical: 15,
+    // backgroundColor: "orange",
   },
   date: {
-    width: "32%",
-    // backgroundColor: "pink",
+    width: 125,
   },
   label: {
     color: "#505050",

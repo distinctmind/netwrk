@@ -6,17 +6,30 @@ import PersonItem from "../components/PersonItem";
 import { Text, View } from "../components/Themed";
 
 import { RootTabScreenProps } from "../types";
+import moment from "moment";
+
+type Birthday = {
+  year: number;
+  month: number;
+  day: number;
+};
+
+type Person = {
+  name: string;
+  birthday: Birthday;
+};
 
 // const people: string[] = ["jay"];
-const initialList: string[] = [];
+let Jay = { name: "Jay", birthday: { year: 1997, month: 6, day: 29 } };
+const initialList: Person[] = [Jay];
 
 export default function PeopleScreen({
   navigation,
 }: RootTabScreenProps<"PeopleTab">) {
   const [people, setPeople] = useState(initialList);
 
-  const addPerson = (person: string) => {
-    const updatedPeople: string[] = [...people, person];
+  const addPerson = (person: Person) => {
+    const updatedPeople: Person[] = [...people, person];
     setPeople(updatedPeople);
   };
 
@@ -43,7 +56,9 @@ export default function PeopleScreen({
       </View>
       <FlatList
         data={people}
-        renderItem={({ item }) => <PersonItem name={item} />}
+        renderItem={({ item: person }) => (
+          <PersonItem name={person.name} birthday={person.birthday} />
+        )}
       ></FlatList>
       {/* <EditScreenInfo path="/screens/PeopleScreen.tsx" /> */}
     </SafeAreaView>

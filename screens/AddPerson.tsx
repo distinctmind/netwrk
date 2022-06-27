@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { StyleSheet, View, Button } from "react-native";
+import { Text, StyleSheet, View, Alert } from "react-native";
 import { RootStackScreenProps } from "../types";
 
+import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 import DateInput from "../components/DateInput";
 
@@ -9,8 +10,13 @@ function AddPerson({ navigation, route }: RootStackScreenProps<"AddPerson">) {
   const [name, setName] = useState("");
 
   const onPress = () => {
-    route.params.addPerson(name);
-    navigation.pop();
+    if (name) {
+      let person = { name: name, birthday: new Date() };
+      route.params.addPerson(person);
+      navigation.pop();
+    } else {
+      Alert.alert("You have to specify a name");
+    }
   };
 
   return (

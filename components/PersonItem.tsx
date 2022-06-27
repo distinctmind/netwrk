@@ -1,9 +1,21 @@
 import { Text, View, StyleSheet } from "react-native";
+import moment from "moment";
 
-function PersonItem({ name }: { name: string }) {
+const daysUntilBirthday = (birthday: any) => {
+  let now = moment().startOf("day");
+  let birthdayDate = moment([2022, birthday.month - 1, birthday.day]);
+  let days = moment(birthdayDate).diff(now, "days");
+  if (days < 0) days = 365 + days;
+  return days > 1 ? days + " days" : days + " day";
+};
+
+function PersonItem({ name, birthday }: { name: string; birthday: any }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={styles.title}>{name}</Text>
+      <Text style={styles.subtitle}>{`🎂 in ${daysUntilBirthday(
+        birthday
+      )}`}</Text>
     </View>
   );
 }
@@ -14,11 +26,17 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: "center",
   },
-  text: {
+  title: {
     fontSize: 20,
     textTransform: "capitalize",
     fontWeight: "bold",
     paddingTop: 5,
+    paddingLeft: 30,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    paddingTop: 10,
     paddingLeft: 30,
   },
 });
