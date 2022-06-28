@@ -1,7 +1,8 @@
 import { Text, View, StyleSheet } from "react-native";
 import moment from "moment";
+import { Birthday } from "../screens/types";
 
-const daysUntilBirthday = (birthday: any) => {
+const daysUntilBirthday = (birthday: Birthday) => {
   let now = moment().startOf("day");
   let birthdayDate = moment([2022, birthday.month - 1, birthday.day]);
   let days = moment(birthdayDate).diff(now, "days");
@@ -9,7 +10,7 @@ const daysUntilBirthday = (birthday: any) => {
   return days > 1 ? days + " days" : days + " day";
 };
 
-function PersonItem({ name, birthday }: { name: string; birthday: any }) {
+function PersonItem({ name, birthday }: { name: string; birthday: Birthday }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{name}</Text>

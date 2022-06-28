@@ -6,22 +6,10 @@ import PersonItem from "../components/PersonItem";
 import { Text, View } from "../components/Themed";
 
 import { RootTabScreenProps } from "../types";
-import moment from "moment";
+import { Person } from "./types";
 
-type Birthday = {
-  year: number;
-  month: number;
-  day: number;
-};
-
-type Person = {
-  name: string;
-  birthday: Birthday;
-};
-
-// const people: string[] = ["jay"];
-let Jay = { name: "Jay", birthday: { year: 1997, month: 6, day: 29 } };
-const initialList: Person[] = [Jay];
+let Dad = { name: "Dad", birthday: { year: 1972, month: 9, day: 7 } };
+const initialList: Person[] = [Dad];
 
 export default function PeopleScreen({
   navigation,
