@@ -14,8 +14,8 @@ const titles = {
 
 function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
   const person = route.params?.person;
+  const index = person?.id ?? -1;
   const mode = route.params.mode;
-  const index = route.params?.index;
 
   const getBirthday = () => {
     return person ? person.birthday : new Date();
@@ -29,14 +29,16 @@ function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
   const [date, setDate] = useState(getBirthday());
 
   const onPress = () => {
+    console.log("Pressing button, index is: ", index);
+
     if (name && date) {
-      let person: Person = { name: name, birthday: date };
+      let person: Person = { id: index, name: name, birthday: date };
       if (mode === "add") {
         let addPerson = route.params?.addPerson;
         if (addPerson) addPerson(person);
       } else if (mode === "edit") {
         let editPerson = route.params?.editPerson;
-        if (editPerson && index !== undefined) editPerson(person, index);
+        if (editPerson && index !== undefined) editPerson(person);
       }
       navigation.pop();
     } else {

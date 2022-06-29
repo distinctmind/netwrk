@@ -25,7 +25,7 @@ export type RootStackParamList = {
     mode: string;
     index?: number;
     addPerson?: (person: Person) => void;
-    editPerson?: (person: Person, index: number) => void;
+    editPerson?: (person: Person) => void;
   };
   Modal: undefined;
   NotFound: undefined;

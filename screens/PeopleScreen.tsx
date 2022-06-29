@@ -11,6 +11,7 @@ import { Person } from "./types";
 const [EDIT, ADD] = ["edit", "add"];
 
 let Dad: Person = {
+  id: 0,
   name: "Dad",
   birthday: new Date(1972, 8, 7),
 };
@@ -26,13 +27,14 @@ export default function PeopleScreen({
   const [people, setPeople] = useState(initialList);
 
   const addPerson = (person: Person) => {
+    person.id = people.length;
     const updatedPeople: Person[] = [...people, person];
     setPeople(updatedPeople);
   };
 
-  const editPerson = (person: Person, index: number) => {
+  const editPerson = (person: Person) => {
     const updatedPeople = [...people];
-    updatedPeople[index] = person;
+    updatedPeople[person.id] = person;
     setPeople(updatedPeople);
   };
 
@@ -61,7 +63,7 @@ export default function PeopleScreen({
       </View>
       <FlatList
         data={people}
-        renderItem={({ item: person, index }) => (
+        renderItem={({ item: person }) => (
           <PersonItem
             name={person.name}
             birthday={person.birthday}
@@ -69,7 +71,6 @@ export default function PeopleScreen({
               navigation.navigate("Person", {
                 person,
                 mode: EDIT,
-                index,
                 editPerson,
               })
             }

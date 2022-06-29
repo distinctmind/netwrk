@@ -47,12 +47,8 @@ function PersonItem({
 
 const styles = StyleSheet.create({
   container: {
-    // alignSelf: "center",
-    // borderColor: "lightgrey",
     borderRadius: 8,
-    // borderWidth: 2,
     backgroundColor: "white",
-    // width: "92%",
     height: 80,
     justifyContent: "center",
     shadowColor: "black",
