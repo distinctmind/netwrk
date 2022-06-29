@@ -9,6 +9,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Person } from "./screens/types";
 
 declare global {
   namespace ReactNavigation {
@@ -19,7 +20,7 @@ declare global {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   People: undefined;
-  AddPerson: { addPerson: (person: any) => void };
+  Person: { person?: Person; addPerson: (person: any) => void };
   Modal: undefined;
   NotFound: undefined;
 };

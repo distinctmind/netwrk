@@ -2,8 +2,14 @@ import { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-function DateInput({ onSelectDate }: any) {
-  const [date, setDate] = useState(new Date());
+function DateInput({
+  birthday,
+  onSelectDate,
+}: {
+  birthday: Date;
+  onSelectDate: any;
+}) {
+  const [date, setDate] = useState(birthday);
 
   const onChange = (event: any, selectedDate: Date | undefined) => {
     if (selectedDate instanceof Date) {

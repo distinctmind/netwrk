@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, StyleSheet, View, Alert } from "react-native";
 import { RootStackScreenProps } from "../types";
 
@@ -9,8 +9,26 @@ import { Birthday, Person } from "./types";
 
 var birthday: Birthday;
 
-function AddPerson({ navigation, route }: RootStackScreenProps<"AddPerson">) {
-  const [name, setName] = useState("");
+function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
+  const person = route.params?.person;
+  const getBirthday = () => {
+    if (person) {
+      return new Date(
+        person.birthday.year,
+        person.birthday.month - 1,
+        person.birthday.day
+      );
+    }
+    return new Date();
+  };
+
+  const getName = () => {
+    if (person) return person.name;
+    return "";
+  };
+
+  const [name, setName] = useState(getName());
+  const [date, setDate] = useState(getBirthday());
 
   const onPress = () => {
     if (name && birthday) {
@@ -34,8 +52,8 @@ function AddPerson({ navigation, route }: RootStackScreenProps<"AddPerson">) {
 
   return (
     <View style={styles.container}>
-      <TextInput onChangeText={(text: string) => setName(text)} />
-      <DateInput onSelectDate={onSelectDate} />
+      <TextInput name={name} onChangeText={(text: string) => setName(text)} />
+      <DateInput birthday={date} onSelectDate={onSelectDate} />
       <Button title="Add Person" onPress={onPress} />
     </View>
   );
@@ -48,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddPerson;
+export default PersonScreen;

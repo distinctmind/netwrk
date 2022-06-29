@@ -11,6 +11,10 @@ import { Person } from "./types";
 let Dad = { name: "Dad", birthday: { year: 1972, month: 9, day: 7 } };
 const initialList: Person[] = [Dad];
 
+function Separator() {
+  return <View style={styles.separator} />;
+}
+
 export default function PeopleScreen({
   navigation,
 }: RootTabScreenProps<"PeopleTab">) {
@@ -26,7 +30,7 @@ export default function PeopleScreen({
       <View style={styles.header}>
         <Text style={styles.headerText}>People</Text>
         <Pressable
-          onPress={() => navigation.navigate("AddPerson", { addPerson })}
+          onPress={() => navigation.navigate("Person", { addPerson })}
           style={[
             styles.addButton,
             // ({ pressed }) => ({
@@ -45,10 +49,14 @@ export default function PeopleScreen({
       <FlatList
         data={people}
         renderItem={({ item: person }) => (
-          <PersonItem name={person.name} birthday={person.birthday} />
+          <PersonItem
+            name={person.name}
+            birthday={person.birthday}
+            onPress={() => navigation.navigate("Person", { person, addPerson })}
+          />
         )}
+        ItemSeparatorComponent={Separator}
       ></FlatList>
-      {/* <EditScreenInfo path="/screens/PeopleScreen.tsx" /> */}
     </SafeAreaView>
   );
 }
@@ -81,8 +89,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+    alignSelf: "center",
+    height: 0.3,
+    width: "88%",
+    backgroundColor: "#B0B0B0",
+    borderRadius: 10,
   },
 });

@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AddPerson from "../screens/AddPerson";
+import PersonScreen from "../screens/PersonScreen";
 import PeopleScreen from "../screens/PeopleScreen";
 import { RootStackParamList } from "../types";
 
@@ -10,8 +10,8 @@ const PeopleNavigator = () => (
     <Stack.Screen name="People" component={PeopleScreen} />
     <Stack.Screen
       options={{ headerShown: true }}
-      name="AddPerson"
-      component={AddPerson}
+      name="Person"
+      component={PersonScreen}
     />
   </Stack.Navigator>
 );

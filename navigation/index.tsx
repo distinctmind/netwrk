@@ -19,14 +19,12 @@ import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import UpcomingScreen from "../screens/UpcomingScreen";
-import PeopleScreen from "../screens/PeopleScreen";
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import AddPerson from "../screens/AddPerson";
 import PeopleNavigator from "./PeopleNavigator";
 
 export default function Navigation({

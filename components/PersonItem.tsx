@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Pressable } from "react-native";
 import moment from "moment";
 import { Birthday } from "../screens/types";
 
@@ -10,22 +10,41 @@ const daysUntilBirthday = (birthday: Birthday) => {
   return days > 1 ? days + " days" : days + " day";
 };
 
-function PersonItem({ name, birthday }: { name: string; birthday: Birthday }) {
+function PersonItem({
+  name,
+  birthday,
+  onPress,
+}: {
+  name: string;
+  birthday: Birthday;
+  onPress: () => void;
+}) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{name}</Text>
-      <Text style={styles.subtitle}>{`🎂 in ${daysUntilBirthday(
-        birthday
-      )}`}</Text>
-    </View>
+    <Pressable onPress={onPress}>
+      <View style={styles.container}>
+        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.subtitle}>{`🎂 in ${daysUntilBirthday(
+          birthday
+        )}`}</Text>
+      </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "orange",
+    // alignSelf: "center",
+    // borderColor: "lightgrey",
+    borderRadius: 8,
+    // borderWidth: 2,
+    backgroundColor: "white",
+    // width: "92%",
     height: 80,
     justifyContent: "center",
+    shadowColor: "black",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0,
+    shadowRadius: 3,
   },
   title: {
     fontSize: 20,
