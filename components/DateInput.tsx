@@ -37,7 +37,6 @@ function DateInput({
 const styles = StyleSheet.create({
   view: {
     padding: 20,
-    // backgroundColor: "orange",
   },
   date: {
     width: 125,

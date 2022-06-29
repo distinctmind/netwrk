@@ -5,34 +5,25 @@ import { RootStackScreenProps } from "../types";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 import DateInput from "../components/DateInput";
-import { Birthday, Person } from "./types";
-
-var birthday: Birthday;
+import { Person } from "./types";
 
 function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
   const person = route.params?.person;
+
   const getBirthday = () => {
-    if (person) {
-      return new Date(
-        person.birthday.year,
-        person.birthday.month - 1,
-        person.birthday.day
-      );
-    }
-    return new Date();
+    return person ? person.birthday : new Date();
   };
 
   const getName = () => {
-    if (person) return person.name;
-    return "";
+    return person ? person.name : "";
   };
 
   const [name, setName] = useState(getName());
   const [date, setDate] = useState(getBirthday());
 
   const onPress = () => {
-    if (name && birthday) {
-      let person: Person = { name: name, birthday: birthday };
+    if (name && date) {
+      let person: Person = { name: name, birthday: date };
       route.params.addPerson(person);
       navigation.pop();
     } else {
@@ -41,13 +32,7 @@ function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
   };
 
   const onSelectDate = (selectedDate: Date) => {
-    if (selectedDate) {
-      birthday = {
-        year: selectedDate.getFullYear(),
-        month: selectedDate.getMonth() + 1,
-        day: selectedDate.getDate(),
-      };
-    }
+    if (selectedDate) setDate(selectedDate);
   };
 
   return (

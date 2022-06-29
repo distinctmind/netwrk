@@ -8,7 +8,7 @@ import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { Person } from "./types";
 
-let Dad = { name: "Dad", birthday: { year: 1972, month: 9, day: 7 } };
+let Dad = { name: "Dad", birthday: new Date(1972, 8, 7) };
 const initialList: Person[] = [Dad];
 
 function Separator() {

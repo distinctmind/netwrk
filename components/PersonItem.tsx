@@ -1,10 +1,15 @@
 import { Text, View, StyleSheet, Pressable } from "react-native";
 import moment from "moment";
-import { Birthday } from "../screens/types";
 
-const daysUntilBirthday = (birthday: Birthday) => {
+const daysUntilBirthday = (birthday: Date) => {
   let now = moment().startOf("day");
-  let birthdayDate = moment([2022, birthday.month - 1, birthday.day]);
+
+  //To get the days until birthday, we set the year to current year.
+  let birthdayDate = moment([
+    now.year(),
+    birthday.getMonth(),
+    birthday.getDate(),
+  ]);
   let days = moment(birthdayDate).diff(now, "days");
   if (days < 0) days = 365 + days;
   return days > 1 ? days + " days" : days + " day";
@@ -16,7 +21,7 @@ function PersonItem({
   onPress,
 }: {
   name: string;
-  birthday: Birthday;
+  birthday: Date;
   onPress: () => void;
 }) {
   return (
