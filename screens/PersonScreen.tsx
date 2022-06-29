@@ -16,6 +16,11 @@ function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
   const person = route.params?.person;
   const index = person?.id ?? -1;
   const mode = route.params.mode;
+  const title = person?.name ?? "Add Person";
+
+  useEffect(() => {
+    navigation.setOptions({ title: title });
+  }, []);
 
   const getBirthday = () => {
     return person ? person.birthday : new Date();
@@ -29,8 +34,6 @@ function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
   const [date, setDate] = useState(getBirthday());
 
   const onPress = () => {
-    console.log("Pressing button, index is: ", index);
-
     if (name && date) {
       let person: Person = { id: index, name: name, birthday: date };
       if (mode === "add") {
