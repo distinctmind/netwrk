@@ -8,8 +8,13 @@ import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { Person } from "./types";
 
-let Dad = { name: "Dad", birthday: new Date(1972, 8, 7) };
-const initialList: Person[] = [Dad];
+const [EDIT, ADD] = ["edit", "add"];
+
+let Dad: Person = {
+  name: "Dad",
+  birthday: new Date(1972, 8, 7),
+};
+const initialList = [Dad];
 
 function Separator() {
   return <View style={styles.separator} />;
@@ -25,12 +30,20 @@ export default function PeopleScreen({
     setPeople(updatedPeople);
   };
 
+  const editPerson = (person: Person, index: number) => {
+    const updatedPeople = [...people];
+    updatedPeople[index] = person;
+    setPeople(updatedPeople);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>People</Text>
         <Pressable
-          onPress={() => navigation.navigate("Person", { addPerson })}
+          onPress={() =>
+            navigation.navigate("Person", { mode: ADD, addPerson })
+          }
           style={[
             styles.addButton,
             // ({ pressed }) => ({
@@ -48,11 +61,18 @@ export default function PeopleScreen({
       </View>
       <FlatList
         data={people}
-        renderItem={({ item: person }) => (
+        renderItem={({ item: person, index }) => (
           <PersonItem
             name={person.name}
             birthday={person.birthday}
-            onPress={() => navigation.navigate("Person", { person, addPerson })}
+            onPress={() =>
+              navigation.navigate("Person", {
+                person,
+                mode: EDIT,
+                index,
+                editPerson,
+              })
+            }
           />
         )}
         ItemSeparatorComponent={Separator}

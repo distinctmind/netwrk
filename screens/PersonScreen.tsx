@@ -7,8 +7,15 @@ import TextInput from "../components/TextInput";
 import DateInput from "../components/DateInput";
 import { Person } from "./types";
 
+const titles = {
+  edit: "Save changes.",
+  add: "Add Person",
+};
+
 function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
   const person = route.params?.person;
+  const mode = route.params.mode;
+  const index = route.params?.index;
 
   const getBirthday = () => {
     return person ? person.birthday : new Date();
@@ -24,7 +31,13 @@ function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
   const onPress = () => {
     if (name && date) {
       let person: Person = { name: name, birthday: date };
-      route.params.addPerson(person);
+      if (mode === "add") {
+        let addPerson = route.params?.addPerson;
+        if (addPerson) addPerson(person);
+      } else if (mode === "edit") {
+        let editPerson = route.params?.editPerson;
+        if (editPerson && index !== undefined) editPerson(person, index);
+      }
       navigation.pop();
     } else {
       Alert.alert("Please specify a name and birthday.");
@@ -39,7 +52,7 @@ function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
     <View style={styles.container}>
       <TextInput name={name} onChangeText={(text: string) => setName(text)} />
       <DateInput birthday={date} onSelectDate={onSelectDate} />
-      <Button title="Add Person" onPress={onPress} />
+      <Button title={`${mode} Person`} onPress={onPress} />
     </View>
   );
 }

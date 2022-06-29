@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     fontWeight: "600",
+    textTransform: "capitalize",
   },
   view: {
     paddingHorizontal: 20,
