@@ -10,9 +10,20 @@ const daysUntilBirthday = (birthday: Date) => {
     birthday.getMonth(),
     birthday.getDate(),
   ]);
-  let days = moment(birthdayDate).diff(now, "days");
-  if (days < 0) days = 365 + days;
-  return days > 1 ? days + " days" : days + " day";
+  let daysLeft = moment(birthdayDate).diff(now, "days");
+  if (daysLeft < 0) daysLeft = 365 + daysLeft;
+  return daysLeft;
+};
+
+const getBirthdayText = (birthday: Date) => {
+  const daysLeft = daysUntilBirthday(birthday);
+  if (daysLeft === 0) {
+    return "🎂 is today!";
+  } else if (daysLeft === 1) {
+    return "🎂 is tomorrow";
+  } else {
+    return `🎂 in ${daysLeft} days`;
+  }
 };
 
 function PersonItem({
@@ -28,9 +39,7 @@ function PersonItem({
     <Pressable onPress={onPress}>
       <View style={styles.container}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.subtitle}>{`🎂 in ${daysUntilBirthday(
-          birthday
-        )}`}</Text>
+        <Text style={styles.subtitle}>{getBirthdayText(birthday)}</Text>
       </View>
     </Pressable>
   );
