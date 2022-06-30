@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   date: {
+    marginLeft: -10,
     width: 125,
   },
   label: {

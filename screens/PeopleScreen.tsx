@@ -63,6 +63,7 @@ export default function PeopleScreen({
       </View>
       <FlatList
         data={people}
+        contentContainerStyle={{ padding: 25 }}
         renderItem={({ item: person }) => (
           <PersonItem
             name={person.name}
@@ -76,7 +77,7 @@ export default function PeopleScreen({
             }
           />
         )}
-        ItemSeparatorComponent={Separator}
+        // ItemSeparatorComponent={Separator}
       ></FlatList>
     </SafeAreaView>
   );
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "stretch",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "rgba(255,255,255,0.1)",
   },
   title: {
     fontSize: 20,
@@ -101,6 +102,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "center",
+    backgroundColor: "rgba(255,255,255,0.1)",
   },
   headerText: {
     alignSelf: "center",

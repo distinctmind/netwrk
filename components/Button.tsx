@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   },
   view: {
     paddingHorizontal: 20,
+    marginLeft: 5,
     marginTop: 10,
   },
 });

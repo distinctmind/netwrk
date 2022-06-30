@@ -47,14 +47,15 @@ function PersonItem({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 8,
-    backgroundColor: "white",
-    height: 80,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.8)",
+    height: 111,
     justifyContent: "center",
-    shadowColor: "black",
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0,
-    shadowRadius: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    marginBottom: 25,
   },
   title: {
     fontSize: 20,
