@@ -15,6 +15,30 @@ const daysUntilBirthday = (birthday: Date) => {
   return daysLeft;
 };
 
+const yearsOld = (birthday: Date) => {
+  let now = new Date();
+  return now.getFullYear() - birthday.getFullYear();
+};
+
+const getBirthdayText = (birthday: Date) => {
+  let date = moment(birthday);
+  let month = date.format("MMMM");
+  let day = date.format("D");
+  return month + " " + day;
+};
+
+const getDaysLeft = (birthday: Date) => {
+  const daysLeft = daysUntilBirthday(birthday);
+  if (daysLeft === 0) {
+    return "Today!";
+  } else if (daysLeft === 1) {
+    return "1 day";
+  } else {
+    return daysLeft + " days";
+  }
+};
+
+/*
 const getBirthdayText = (birthday: Date) => {
   const daysLeft = daysUntilBirthday(birthday);
   if (daysLeft === 0) {
@@ -25,6 +49,7 @@ const getBirthdayText = (birthday: Date) => {
     return `🎂 in ${daysLeft} days`;
   }
 };
+*/
 
 function PersonItem({
   name,
@@ -43,7 +68,11 @@ function PersonItem({
         {/* <Animated.View style={[styles.container, { transform: [{ scale }] }]}> */}
         <View style={styles.container}>
           <Text style={styles.title}>{name}</Text>
-          <Text style={styles.subtitle}>{getBirthdayText(birthday)}</Text>
+          <Text style={styles.subtitle}>{`Turns ${yearsOld(
+            birthday
+          )} on ${getBirthdayText(birthday)} `}</Text>
+          {/* <Text style={styles.subtitle}>{getBirthdayText(birthday)}</Text> */}
+          <Text style={styles.days}>{getDaysLeft(birthday)}</Text>
         </View>
       </Pressable>
     </Animated.View>
@@ -51,6 +80,12 @@ function PersonItem({
 }
 
 const styles = StyleSheet.create({
+  days: {
+    position: "absolute",
+    paddingRight: 30,
+    alignSelf: "flex-end",
+    fontWeight: "500",
+  },
   container: {
     borderRadius: 20,
     backgroundColor: "rgba(255,255,255,0.8)",
@@ -70,8 +105,8 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
   },
   subtitle: {
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 16,
+    fontWeight: "500",
     paddingTop: 10,
     paddingLeft: 30,
   },

@@ -26,6 +26,11 @@ function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
     return person ? person.birthday : new Date();
   };
 
+  const yearsOld = (birthdate: Date) => {
+    let now = new Date();
+    return now.getFullYear() - birthdate.getFullYear();
+  };
+
   const getName = () => {
     return person ? person.name : "";
   };
@@ -57,6 +62,7 @@ function PersonScreen({ navigation, route }: RootStackScreenProps<"Person">) {
     <View style={styles.container}>
       <TextInput name={name} onChangeText={(text: string) => setName(text)} />
       <DateInput birthday={date} onSelectDate={onSelectDate} />
+      {date && <Text>{`${name} is turning ${yearsOld(date)} years old!`}</Text>}
       <Button title={`${mode} Person`} onPress={onPress} />
     </View>
   );
