@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Animated, Text, View, StyleSheet, Pressable } from "react-native";
 import moment from "moment";
 
 const daysUntilBirthday = (birthday: Date) => {
@@ -28,20 +28,25 @@ const getBirthdayText = (birthday: Date) => {
 
 function PersonItem({
   name,
+  scale,
   birthday,
   onPress,
 }: {
   name: string;
+  scale: Animated.AnimatedInterpolation;
   birthday: Date;
   onPress: () => void;
 }) {
   return (
-    <Pressable onPress={onPress}>
-      <View style={styles.container}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.subtitle}>{getBirthdayText(birthday)}</Text>
-      </View>
-    </Pressable>
+    <Animated.View style={{ transform: [{ scale: scale }] }}>
+      <Pressable onPress={onPress}>
+        {/* <Animated.View style={[styles.container, { transform: [{ scale }] }]}> */}
+        <View style={styles.container}>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.subtitle}>{getBirthdayText(birthday)}</Text>
+        </View>
+      </Pressable>
+    </Animated.View>
   );
 }
 

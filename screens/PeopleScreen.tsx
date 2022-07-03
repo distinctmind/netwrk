@@ -1,5 +1,11 @@
-import { useState } from "react";
-import { FlatList, Pressable, SafeAreaView, StyleSheet } from "react-native";
+import { useState, useRef } from "react";
+import {
+  Animated,
+  FlatList,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import EditScreenInfo from "../components/EditScreenInfo";
 import PersonItem from "../components/PersonItem";
@@ -7,6 +13,7 @@ import { Text, View } from "../components/Themed";
 
 import { RootTabScreenProps } from "../types";
 import { Person } from "./types";
+import { faker } from "@faker-js/faker";
 
 const [EDIT, ADD] = ["edit", "add"];
 
@@ -17,13 +24,20 @@ let Dad: Person = {
 };
 const initialList = [Dad];
 
-function Separator() {
-  return <View style={styles.separator} />;
-}
+const ITEM_SIZE = 111 + 29;
+
+const data: Person[] = [...Array(10).keys()].map((_, i) => {
+  return {
+    id: i,
+    name: faker.name.firstName(),
+    birthday: faker.date.birthdate(),
+  };
+});
 
 export default function PeopleScreen({
   navigation,
 }: RootTabScreenProps<"PeopleTab">) {
+  const scrollY = useRef(new Animated.Value(0)).current;
   const [people, setPeople] = useState(initialList);
 
   const addPerson = (person: Person) => {
@@ -61,24 +75,53 @@ export default function PeopleScreen({
           />
         </Pressable>
       </View>
-      <FlatList
-        data={people}
-        contentContainerStyle={{ padding: 25 }}
-        renderItem={({ item: person }) => (
-          <PersonItem
-            name={person.name}
-            birthday={person.birthday}
-            onPress={() =>
-              navigation.navigate("Person", {
-                person,
-                mode: EDIT,
-                editPerson,
-              })
-            }
-          />
+      <Animated.FlatList
+        data={data}
+        // scrollEventThrottle={1}
+        onScroll={Animated.event(
+          [
+            {
+              nativeEvent: { contentOffset: { y: scrollY } },
+            },
+          ],
+          { useNativeDriver: true }
         )}
+        /*
+        onScroll={(e) => {
+          setScroll(e.nativeEvent.contentOffset.y);
+          scrollY.setValue(e.nativeEvent.contentOffset.y);
+          // console.log(e.nativeEvent.contentOffset.y);
+        }}
+        */
+        contentContainerStyle={{ padding: 25 }}
+        renderItem={({ item: person, index }) => {
+          const inputRange = [
+            -1,
+            0,
+            ITEM_SIZE * index,
+            ITEM_SIZE * (index + 3),
+          ];
+          const scale = scrollY.interpolate({
+            inputRange,
+            outputRange: [1, 1, 1, 0],
+          });
+          return (
+            <PersonItem
+              name={person.name}
+              scale={scale}
+              birthday={person.birthday}
+              onPress={() =>
+                navigation.navigate("Person", {
+                  person,
+                  mode: EDIT,
+                  editPerson,
+                })
+              }
+            />
+          );
+        }}
         // ItemSeparatorComponent={Separator}
-      ></FlatList>
+      ></Animated.FlatList>
     </SafeAreaView>
   );
 }
