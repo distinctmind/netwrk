@@ -10,27 +10,32 @@ import { FontAwesome } from "@expo/vector-icons";
 import EditScreenInfo from "../components/EditScreenInfo";
 import PersonItem from "../components/PersonItem";
 import { Text, View } from "../components/Themed";
+import { faker } from "@faker-js/faker";
 
 import { RootTabScreenProps } from "../types";
 import { Person } from "./types";
-import { faker } from "@faker-js/faker";
+import { daysUntilBirthday } from "../utility/birthday";
 
 const [EDIT, ADD] = ["edit", "add"];
 
+/*
 let Dad: Person = {
   id: 0,
   name: "Dad",
   birthday: new Date(1972, 8, 7),
 };
 const initialList = [Dad];
-
+*/
 const ITEM_SIZE = 111 + 29;
 
 const data: Person[] = [...Array(10).keys()].map((_, i) => {
+  let birthday = faker.date.birthdate();
+  let daysLeft = daysUntilBirthday(birthday);
   return {
     id: i,
     name: faker.name.firstName(),
-    birthday: faker.date.birthdate(),
+    birthday: birthday,
+    daysLeft: daysLeft,
   };
 });
 
@@ -38,7 +43,7 @@ export default function PeopleScreen({
   navigation,
 }: RootTabScreenProps<"PeopleTab">) {
   const scrollY = useRef(new Animated.Value(0)).current;
-  const [people, setPeople] = useState(initialList);
+  const [people, setPeople] = useState(data);
 
   const addPerson = (person: Person) => {
     person.id = people.length;
@@ -60,12 +65,7 @@ export default function PeopleScreen({
           onPress={() =>
             navigation.navigate("Person", { mode: ADD, addPerson })
           }
-          style={[
-            styles.addButton,
-            // ({ pressed }) => ({
-            //   opacity: pressed ? 0.5 : 1,
-            // }),
-          ]}
+          style={styles.addButton}
         >
           <FontAwesome
             name="plus"
@@ -76,7 +76,7 @@ export default function PeopleScreen({
         </Pressable>
       </View>
       <Animated.FlatList
-        data={data}
+        data={data.sort((d1, d2) => d1.daysLeft - d2.daysLeft)}
         // scrollEventThrottle={1}
         onScroll={Animated.event(
           [
@@ -86,13 +86,6 @@ export default function PeopleScreen({
           ],
           { useNativeDriver: true }
         )}
-        /*
-        onScroll={(e) => {
-          setScroll(e.nativeEvent.contentOffset.y);
-          scrollY.setValue(e.nativeEvent.contentOffset.y);
-          // console.log(e.nativeEvent.contentOffset.y);
-        }}
-        */
         contentContainerStyle={{ padding: 25 }}
         renderItem={({ item: person, index }) => {
           const inputRange = [
@@ -120,7 +113,6 @@ export default function PeopleScreen({
             />
           );
         }}
-        // ItemSeparatorComponent={Separator}
       ></Animated.FlatList>
     </SafeAreaView>
   );

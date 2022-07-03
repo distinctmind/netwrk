@@ -1,30 +1,9 @@
 import { Animated, Text, View, StyleSheet, Pressable } from "react-native";
-import moment from "moment";
-
-const daysUntilBirthday = (birthday: Date) => {
-  let now = moment().startOf("day");
-
-  //To get the days until birthday, we set the year to current year.
-  let birthdayDate = moment([
-    now.year(),
-    birthday.getMonth(),
-    birthday.getDate(),
-  ]);
-  let daysLeft = moment(birthdayDate).diff(now, "days");
-  if (daysLeft < 0) daysLeft = 365 + daysLeft;
-  return daysLeft;
-};
+import { daysUntilBirthday, getBirthdayText } from "../utility/birthday";
 
 const yearsOld = (birthday: Date) => {
   let now = new Date();
   return now.getFullYear() - birthday.getFullYear();
-};
-
-const getBirthdayText = (birthday: Date) => {
-  let date = moment(birthday);
-  let month = date.format("MMMM");
-  let day = date.format("D");
-  return month + " " + day;
 };
 
 const getDaysLeft = (birthday: Date) => {
@@ -37,19 +16,6 @@ const getDaysLeft = (birthday: Date) => {
     return daysLeft + " days";
   }
 };
-
-/*
-const getBirthdayText = (birthday: Date) => {
-  const daysLeft = daysUntilBirthday(birthday);
-  if (daysLeft === 0) {
-    return "🎂 is today!";
-  } else if (daysLeft === 1) {
-    return "🎂 is tomorrow";
-  } else {
-    return `🎂 in ${daysLeft} days`;
-  }
-};
-*/
 
 function PersonItem({
   name,
